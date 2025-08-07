@@ -1,5 +1,6 @@
 package com.db.dbtemplate.domain;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table(name="books")
 public class Book {
+
+    @Id
     private String isbn;
+
     private String title;
-    private Long authorId;
-    // not using author object since we want to make this like out data table
-    // the table has a numeric value for author, not another object, so should be same here
-    // to make that work
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
+    private Author author;
 }
